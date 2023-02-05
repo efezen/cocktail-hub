@@ -1,24 +1,34 @@
-import React from 'react'
-import { useGlobalContext } from '../context';
+import React from "react";
+import { useGlobalContext } from "../context";
+export default function SearchForm() {
+  const { setSearchTerm } = useGlobalContext();
+  const searchValue = React.useRef("");
 
-function SearchForm() {
-    const {setSearchTerm} = useGlobalContext();
-    const searchValue = React.useRef("");
+  React.useEffect(() => {
+    searchValue.current.focus();
+  }, []);
 
-    function searchCocktail() {
-        setSearchTerm(searchValue.current.value)
-    }
+  function searchCocktail() {
+    setSearchTerm(searchValue.current.value);
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
   return (
-    <section className='section search'>
-        <form className='search-form'>
-            <div className='form-control'>
-                <label htmlFor="name">
-                    <input type="text" />
-                </label>
-            </div>
-        </form>
+    <section className="section search">
+      <form className="search-form" onSubmit={handleSubmit}>
+        <div className="form-control">
+          <label htmlFor="name"></label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            ref={searchValue}
+            onChange={searchCocktail}
+            placeholder="Search cocktail.."
+          />
+        </div>
+      </form>
     </section>
-  )
+  );
 }
-
-export default SearchForm;
